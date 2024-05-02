@@ -1,14 +1,18 @@
 import unittest
 from unittest.mock import patch, mock_open
-from CreditScore.exceptions.InvalidElementsRow import InvalidElementsRow
+from exceptions.InvalidElementsRow import InvalidElementsRow
 from exceptions.BadExtensionFile import BadExtensionFile
 import io
-from main import CreditScoreProcessor
+from CreditScore.CreditScore import CreditScoreProcessor
 
 
 # test commit
 class TestCreditScoreEvent(unittest.TestCase):
-
+    def test_all_good(self):
+        processor = CreditScoreProcessor('updateDatabase.csv')
+        processor.process_file()
+        self.assertEqual(processor.CreditScoreEvent, {})
+        
     @patch('builtins.open', new_callable=mock_open, read_data='PersonId,TimeStamp,CreditScore')
     def test_valid_csv(self, mock_file):
         processor = CreditScoreProcessor('updateDatabase.csv')
