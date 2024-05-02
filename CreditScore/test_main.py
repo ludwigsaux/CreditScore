@@ -5,6 +5,8 @@ from exceptions.BadExtensionFile import BadExtensionFile
 import io
 from main import CreditScoreProcessor
 
+
+# test commit
 class TestCreditScoreEvent(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data='PersonId,TimeStamp,CreditScore')
