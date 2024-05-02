@@ -3,17 +3,15 @@ from CreditScore.exceptions.InvalidElementsRow import InvalidElementsRow
 from exceptions.BadExtensionFile import BadExtensionFile
 
 CreditScoreEvent = {}
-filename = 'updateDatabase.xlsx'
+filename = 'updateDatabase.csv'
 
 try :
     with open(filename, newline='') as csvfile:
         data = csv.reader(csvfile, delimiter=',')
-        '''try :
-            if not filename.lower().endswith('.csv'):
-                ext= filename.lower().split('.')[1]
-                raise BadExtensionFile(extension=ext)
-        except BadExtensionFile as e:
-            print(e)'''
+        if not filename.lower().endswith('.csv'):
+            ext= filename.lower().split('.')[1]
+            raise BadExtensionFile(extension=ext)
+
         for row in data:
             try:
                 if len(row) != 3:
@@ -25,15 +23,19 @@ try :
                 pass
         print(CreditScoreEvent)
 
-except ValueError:
+except FileNotFoundError:
+    print(f"Le fichier '{filename}' n'a pas été trouvé.")
+
+except BadExtensionFile as e:
     ext = filename.lower().split('.')[1]
-    raise BadExtensionFile(extension=ext)
+    print(e)
 
 
 
-
+'''
 # CSV
     # combien d'element dans la ligne ?
+    # verification fichier existant ou mauvaise extension
 
 # PersonID
     # si existe pas -> ajout
@@ -50,7 +52,7 @@ except ValueError:
 # CreditScore
     # verifier type
     # 300 < CreditScore < 850
-
+'''
 
 
 
